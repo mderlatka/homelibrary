@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="base.definition" template="/WEB-INF/views/layout/classic.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="menu" value="/WEB-INF/views/layout/menu.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+		<put-attribute name="current" value="" cascade="true" />
+	</definition>
+	<definition name="welcome" extends="base.definition">
+		<put-attribute name="title" value="Homelibrary" />
+		<put-attribute name="body" value="/WEB-INF/views/welcome.jsp" />
+		<put-attribute name="current" value="welcome" cascade="true" />
+	</definition>
+	<definition name="login" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+		<put-attribute name="current" value="login" cascade="true" />
+	</definition>
+	<definition name="registerForm" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/registerForm.jsp" />
+		<put-attribute name="current" value="registerForm"
+			cascade="true" />
+	</definition>
+	<definition name="users" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/users.jsp" />
+		<put-attribute name="current" value="users" cascade="true" />
+	</definition>
+	<definition name="userDetails" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/userDetails.jsp" />
+		<put-attribute name="current" value="userDetails"
+			cascade="true" />
+	</definition>
+	<definition name="books" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/books.jsp" />
+		<put-attribute name="current" value="books" cascade="true" />
+	</definition>
+	<definition name="book" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/book.jsp" />
+		<put-attribute name="current" value="book" cascade="true" />
+	</definition>
+	<definition name="latestBooks" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/latestBooks.jsp" />
+		<put-attribute name="current" value="latestBooks"
+			cascade="true" />
+	</definition>
+	<definition name="authors" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/authors.jsp" />
+		<put-attribute name="current" value="authors" cascade="true" />
+	</definition>
+	<definition name="categories" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/categories.jsp" />
+		<put-attribute name="current" value="categories"
+			cascade="true" />
+	</definition>
+	<definition name="addAuthor" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/addAuthor.jsp" />
+		<put-attribute name="current" value="addAuthor" cascade="true" />
+	</definition>
+	<definition name="addCategory" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/addCategory.jsp" />
+		<put-attribute name="current" value="addCategory"
+			cascade="true" />
+	</definition>
+	<definition name="addBook" extends="base.definition">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/addBook.jsp" />
+		<put-attribute name="current" value="addBook" cascade="true" />
+	</definition>
+</tiles-definitions>
