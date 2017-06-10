@@ -22,7 +22,7 @@
 		</div>
 	</section>
 	<section>
-		<!-- beginning adding genre panel -->
+		<!--  adding genre panel -->
 		<div class="col-lg-5 col-lg-offset-3">
 			<div class="panel panel-default">
 				<div class="panel-heading">

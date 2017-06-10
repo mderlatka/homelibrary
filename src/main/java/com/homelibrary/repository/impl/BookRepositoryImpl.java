@@ -23,12 +23,6 @@ public class BookRepositoryImpl implements BookRepository {
 	@Transactional
 	public void insertBook(Book book) {
 
-		book.setTitle(book.getTitle());
-		book.setAuthor(book.getAuthor());
-		book.setReleaseDate(book.getReleaseDate());
-		book.setCategory(book.getCategory());
-		book.setNumOfPages(book.getNumOfPages());
-		book.setDescription(book.getDescription());
 		book = entityManager.merge(book);
 	}
 
@@ -45,7 +39,7 @@ public class BookRepositoryImpl implements BookRepository {
 
 	@Transactional
 	public List<Book> getBookByAuthor(Author author) {
-		Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.author=?", Book.class).setParameter(1,
+		Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.author=?1", Book.class).setParameter(1,
 				author);
 		@SuppressWarnings("unchecked")
 		List<Book> booksOfAuthor = query.getResultList();
@@ -55,7 +49,7 @@ public class BookRepositoryImpl implements BookRepository {
 
 	@Transactional
 	public List<Book> getBooksByCategory(Category category) {
-		Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.category=?", Book.class).setParameter(1,
+		Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.category=?1", Book.class).setParameter(1,
 				category);
 		@SuppressWarnings("unchecked")
 		List<Book> booksOfCategory = query.getResultList();
@@ -67,14 +61,13 @@ public class BookRepositoryImpl implements BookRepository {
 	public Book getBookById(Integer bookId) {
 
 		Book book = entityManager.find(Book.class, bookId);
-		return book;// TODO throw Exception
+		return book;
 	}
 
 	@Transactional
-	public void removeBookById(Integer bookId) {
-		Book book = entityManager.find(Book.class, bookId);
+	public void removeBook(Book book) {
 		if (book != null) {
-			entityManager.remove(book);
+			entityManager.remove(entityManager.merge(book));
 		}
 
 	}

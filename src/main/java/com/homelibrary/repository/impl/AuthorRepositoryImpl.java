@@ -20,8 +20,6 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
 	@Transactional
 	public void insertAuthor(Author author) {
-		author.setAuthorName(author.getAuthorName());
-		author.setAuthorSurname(author.getAuthorSurname());
 		author = entityManager.merge(author);
 	}
 
@@ -40,9 +38,24 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 	}
 
 	@Transactional
-	public void removeAuthorById(Integer authorId) {
-		Author author = entityManager.find(Author.class, authorId);
-		entityManager.remove(author);
+	public void removeAuthor(Author author) {
+		entityManager.remove(entityManager.merge(author));
 	}
 
+	@Transactional
+	public Author findAuthorByName(String authorName, String authorSurname) {
+
+		Query query = entityManager
+				.createQuery(
+						"SELECT a FROM Author a WHERE a.authorName =:authorName AND a.authorSurname =:authorSurname ",
+						Author.class)
+				.setParameter("authorSurname", authorSurname).setParameter("authorName", authorName);
+		@SuppressWarnings("unchecked")
+		List<Author> author = query.getResultList();
+		if (author.isEmpty()) {
+			return null;
+		} else {
+			return author.get(0);
+		}
+	}
 }

@@ -8,7 +8,7 @@
 	href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="navbar navbar-default navbar-fixed-bottom">
+	<div class="navbar navbar-default">
 		<div class="container">
 			<p class="navbar-text">&copy; Marcin Derlatka</p>
 		</div>

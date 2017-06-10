@@ -40,7 +40,7 @@
 									code="home.welcome.Logout" /></a></li>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
-						<li class="${current == 'userDetails' ? 'active' : '' }"><a
+						<li class="${current == 'userAccount' ? 'active' : '' }"><a
 							href="<spring:url value="/account" />"><spring:message
 									code="home.welcome.account" /></a></li>
 					</sec:authorize>

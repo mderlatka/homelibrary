@@ -37,7 +37,7 @@ public class CategoryController {
 
 	@RequestMapping("/delete/category")
 	public String deleteCategory(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
-		categoryService.removeCategoryById(id);
+		categoryService.removeCategory(categoryService.getCategoryById(id));
 		redirectAttributes.addFlashAttribute("deleteCatSuccess", true);
 		return "redirect:/categories";
 	}
@@ -57,9 +57,13 @@ public class CategoryController {
 		if (result.hasErrors()) {
 			return "addCategory";
 		}
-		category.setCategoryName(categoryDto.getCategoryName());
-		categoryService.insertCategory(category);
-		redirectAttributes.addFlashAttribute("addCatSuccess", true);
+		if (categoryService.findCategoryByName(categoryDto.getCategoryName()) != null) {
+			redirectAttributes.addFlashAttribute("categoryExistAlert", true);
+		} else {
+			category.setCategoryName(categoryDto.getCategoryName());
+			categoryService.insertCategory(category);
+			redirectAttributes.addFlashAttribute("addCatSuccess", true);
+		}
 		return "redirect:/categories";
 	}
 

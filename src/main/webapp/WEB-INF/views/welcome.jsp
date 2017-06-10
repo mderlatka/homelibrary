@@ -15,12 +15,10 @@
 	</p>
 </div>
 <div class="row">
-	<div class="col-lg-6">
-		<c:if test="${addUserSuccess eq true}">
-			<div class="alert alert-success">
-				<spring:message code="home.welcome.newUserRegisteredAlert" />
-			</div>
-		</c:if>
-	</div>
+	<c:if test="${addUserSuccess eq true}">
+		<div class="alert alert-success">
+			<spring:message code="home.welcome.newUserRegisteredAlert" />
+		</div>
+	</c:if>
 </div>
 </html>

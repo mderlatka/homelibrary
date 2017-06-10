@@ -1,6 +1,6 @@
 package com.homelibrary.domain;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ public class Category {
 	@Column(name = "category_name")
 	private String categoryName;
 	@OneToMany(mappedBy = "category")
-	private List<Book> books;
+	private Set<Book> books;
 
 	public Integer getCategoryId() {
 		return categoryId;
@@ -39,11 +39,11 @@ public class Category {
 		this.categoryName = categoryName;
 	}
 
-	public List<Book> getBooks() {
+	public Set<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(List<Book> books) {
+	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 

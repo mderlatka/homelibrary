@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.homelibrary.domain.Book;
 import com.homelibrary.domain.User;
 import com.homelibrary.domain.UserRole;
 import com.homelibrary.repository.UserRepository;
@@ -37,7 +38,6 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll();
 	}
 
-	@Transactional
 	public User getUserById(Integer userId) {
 		User user = userRepository.getUserById(userId);
 		List<UserRole> roles = user.getUserRoles();
@@ -45,16 +45,38 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
-	@Transactional
+
 	public List<UserRole> findUserRoles(Integer userId) {
 		return userRepository.findRolesByUserId(userId);
 	}
 
-	public void removeUserById(Integer userId) {
-		userRepository.removeUserById(userId);
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void removeUser(User user) {
+		userRepository.removeUser(user);
 	}
 
 	public User findUserByName(String userName) {
 		return userRepository.findUserByName(userName);
+	}
+
+	public List<Book> getFavoriteUserBooks(Integer userId) {
+		return userRepository.getFavoriteUserBooks(userId);
+	}
+
+	public void saveFavoriteUserBook(Book book, User user) {
+		Integer userId = user.getUserId();
+		List<Book> userBooks = userRepository.getFavoriteUserBooks(userId);
+		userBooks.add(book);
+		user.setFavouriteUsersBooks(userBooks);
+		userRepository.saveFavoriteUserBook(user);
+	}
+	
+	@PreAuthorize("#user.userName == authentication.name or hasRole('ROLE_ADMIN')")
+	public void removeFavoriteUserBook(Book book, User user){
+		Integer userId = user.getUserId();
+		List<Book> userBooks = userRepository.getFavoriteUserBooks(userId);
+		userBooks.remove(book);
+		user.setFavouriteUsersBooks(userBooks);
+		userRepository.saveFavoriteUserBook(user);
 	}
 }

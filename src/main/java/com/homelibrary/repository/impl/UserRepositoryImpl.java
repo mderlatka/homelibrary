@@ -1,5 +1,6 @@
 package com.homelibrary.repository.impl;
 
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,6 +8,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.homelibrary.domain.Book;
 import com.homelibrary.domain.User;
 import com.homelibrary.domain.UserRole;
 import com.homelibrary.repository.UserRepository;
@@ -50,11 +53,9 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Transactional
-	public void removeUserById(Integer userId) {
-
-		User user = entityManager.find(User.class, userId);
+	public void removeUser(User user) {
 		if (user != null) {
-			entityManager.remove(user);
+			entityManager.remove(entityManager.merge(user));
 		}
 	}
 
@@ -63,7 +64,26 @@ public class UserRepositoryImpl implements UserRepository {
 
 		Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.userName =:userName", User.class)
 				.setParameter("userName", userName);
-		User user = (User) query.getSingleResult();
-		return user;
+		@SuppressWarnings("unchecked")
+		List<User> user = query.getResultList();
+		if(user.isEmpty()){
+			return null;
+		}else{
+		return user.get(0);
+		}
+	}
+	
+	@Transactional
+	public List<Book> getFavoriteUserBooks(Integer userId){
+		Query query = entityManager.createQuery("SELECT ub FROM User u JOIN u.favouriteUserBooks ub WHERE u.userId = ?", Book.class).setParameter(1, userId);
+		@SuppressWarnings("unchecked")
+		List<Book>	favouriteUserBooks = query.getResultList();
+		return favouriteUserBooks;
+	}
+	
+	@Transactional
+	public void saveFavoriteUserBook(User user){
+		user = entityManager.merge(user);
+		
 	}
 }

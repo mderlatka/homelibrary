@@ -12,5 +12,7 @@ public interface CategoryRepository {
 
 	Category getCategoryById(Integer categoryId);
 
-	void removeAuthorById(Integer categoryId);
+	void removeCategory(Category category);
+	
+	Category findCategoryByName(String categoryName);
 }

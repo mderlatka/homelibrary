@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.homelibrary.domain.Author;
@@ -26,12 +27,14 @@ public class BooksServiceImpl implements BookService {
 		return bookRepository.getBookById(bookId);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void insertBook(Book book) {
 		bookRepository.insertBook(book);
 	}
 
-	public void removeBookById(Integer bookId) {
-		bookRepository.removeBookById(bookId);
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void removeBook(Book book) {
+		bookRepository.removeBook(book);
 	}
 
 	public List<Book> getBookByAuthor(Author author) {
@@ -46,8 +49,13 @@ public class BooksServiceImpl implements BookService {
 		List<Book> books = bookRepository.getAllBooks();
 		List<Book> latestBooks = new ArrayList<>();
 		if (!books.isEmpty()) {
-			for (int i = 0; i < 3; i++) {
-				latestBooks.add(books.get(books.size() - (i + 1)));
+			if (books.size() > 3) {
+				for(int i=0; i<3; i++){
+					latestBooks.add(books.get(books.size()-(i+1)));
+				}
+			} else {
+				for (Book book : books)
+					latestBooks.add(book);
 			}
 		}
 		return latestBooks;

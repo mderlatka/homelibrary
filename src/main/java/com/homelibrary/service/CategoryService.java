@@ -12,5 +12,7 @@ public interface CategoryService {
 
 	Category getCategoryById(Integer categoryId);
 
-	void removeCategoryById(Integer categoryId);
+	void removeCategory(Category category);
+	
+	Category findCategoryByName(String categoryName);
 }

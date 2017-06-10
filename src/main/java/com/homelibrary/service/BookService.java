@@ -14,7 +14,7 @@ public interface BookService {
 
 	void insertBook(Book book);
 
-	void removeBookById(Integer bookId);
+	void removeBook(Book book);
 
 	List<Book> getBookByAuthor(Author author);
 

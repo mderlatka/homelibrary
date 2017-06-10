@@ -118,7 +118,7 @@ public class BookController {
 		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
 		if (bookImage != null && !bookImage.isEmpty()) {
 			try {
-				bookImage.transferTo(new File(rootDirectory + "resources\\images\\" + title + ".png"));
+				bookImage.transferTo(new File(rootDirectory+"resources\\images\\" + title + ".png"));
 			} catch (Exception e) {
 				throw new RuntimeException("Niepowodzenie podczas próby zapisu obrazka produktu", e);
 			}
@@ -144,7 +144,7 @@ public class BookController {
 
 	@RequestMapping(value = "/book", method = RequestMethod.POST)
 	public String deleteBook(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
-		bookService.removeBookById(id);
+		bookService.removeBook(bookService.getBookById(id));
 		redirectAttributes.addFlashAttribute("deleteSuccess", true);
 		return "redirect:/books";
 	}

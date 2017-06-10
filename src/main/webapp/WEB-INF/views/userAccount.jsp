@@ -13,14 +13,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<title><spring:message code="user.userDetails.pageTitle" /></title>
+<title><spring:message code="user.userAccount.pageTitle" /></title>
 </head>
 <body>
 	<section>
 		<div class="jumbotron">
 			<div class="container">
 				<h2>
-					<spring:message code="user.userDetails.pageHeader" />
+					<spring:message code="user.userAccount.pageHeader" />
 					${user.userName}
 				</h2>
 			</div>
@@ -29,6 +29,21 @@
 	<section>
 		<br />
 		<div class="row">
+			<c:if test="${usrHaveBookInFav eq true}">
+				<div class="alert alert-warning">
+					<spring:message code="user.userAccount.usrHaveBookInFav" />
+				</div>
+			</c:if>
+			<c:if test="${addedFavUsrBookSuccessed eq true}">
+				<div class="alert alert-success">
+					<spring:message code="user.userAccount.addedFavUsrBookSuccessed" />
+				</div>
+			</c:if>
+			<c:if test="${deleteFavUsrBookSuccessed eq true}">
+				<div class="alert alert-danger">
+					<spring:message code="user.userAccount.deleteFavUsrBookSuccessed" />
+				</div>
+			</c:if>
 		</div>
 		<br />
 		<div class="row">
@@ -36,44 +51,36 @@
 				<table class="table table-bordered">
 					<tbody>
 						<tr>
-							<th><spring:message code="user.userDetails.login" /></th>
+							<th><spring:message code="user.userAccount.login" /></th>
 							<td>${user.userName}</td>
 						</tr>
 						<tr>
-							<th><spring:message code="user.userDetails.email" /></th>
+							<th><spring:message code="user.userAccount.email" /></th>
 							<td>${user.email}</td>
 						</tr>
 						<tr>
-							<th><spring:message code="user.userDetails.roles" /></th>
+							<th><spring:message code="user.userAccount.roles" /></th>
 							<td><c:forEach items="${userRoles}" var="usrRoles"> ${usrRoles.rolename}<br />
 								</c:forEach></td>
 						</tr>
 					</tbody>
 				</table>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<div class="col-lg-2 ">
-						<button type="button" class="btn btn-danger" data-toggle="modal"
-							data-target="#deleteUserModal_${user.userId}">
-							<spring:message code="user.userDetails.deleteUserBtn" />
-						</button>
-					</div>
-				</sec:authorize>
 			</div>
 		</div>
 	</section>
 	<section>
 		<div class="row">
 			<h2>
-				<spring:message code="user.userDetails.userBooksTable" />
+				<spring:message code="user.userAccount.userBooksTable" />
 			</h2>
 			<!-- beginning users books table -->
 			<div class="col-lg-8">
 				<table class="table">
 					<thead>
 						<tr>
-							<th><spring:message code="user.userDetails.userFavBookTitle" /></th>
+							<th><spring:message code="user.userAccount.userFavBookTitle" /></th>
 							<th><spring:message
-									code="user.userDetails.userFavBookAuthor" /></th>
+									code="user.userAccount.userFavBookAuthor" /></th>
 						</tr>
 					</thead>
 					<c:forEach items="${userBooks}" var="userBooks">
@@ -92,7 +99,7 @@
 										data-toggle="modal"
 										data-target="#deleteUserBookModal_${userBooks.bookId}">
 										<spring:message
-											code="user.userDetails.deleteFavoriteUserBookBtn" />
+											code="user.userAccount.deleteFavoriteUserBookBtn" />
 									</button>
 								</td>
 							</tr>
@@ -108,13 +115,13 @@
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<h4 class="modal-title">
 											<spring:message
-												code="user.userDetails.modalTitle.deleteFavoriteUserBookBtn" />
+												code="user.userAccount.modalTitle.deleteFavoriteUserBookBtn" />
 										</h4>
 									</div>
 									<div class="modal-body">
 										<p>
 											<spring:message
-												code="user.userDetails.modalBody.deleteFavoriteUserBookBtn" />
+												code="user.userAccount.modalBody.deleteFavoriteUserBookBtn" />
 										</p>
 									</div>
 									<div class="modal-footer">
@@ -122,14 +129,14 @@
 											value="/delete/favorite/book?id=${userBooks.bookId}" />
 										<form action="${deleteFavoriteUserBook}" method="POST">
 											<input type="submit" class="btn btn-danger"
-												value="<spring:message code="user.userDetails.modalFooter.deleteFavoriteUserBookBtn"/>" />
+												value="<spring:message code="user.userAccount.modalFooter.deleteFavoriteUserBookBtn"/>" />
 											<input type="hidden" name="${_csrf.parameterName}"
 												value="${_csrf.token}" />
 										</form>
 										<button type="button" class="btn btn-default"
 											data-dismiss="modal">
 											<spring:message
-												code="user.userDetails.modalFooter.cancelDeleteFavoriteUserBookBtn" />
+												code="user.userAccount.modalFooter.cancelDeleteFavoriteUserBookBtn" />
 										</button>
 									</div>
 								</div>
@@ -142,49 +149,6 @@
 			</div>
 			<!-- end of users books table -->
 		</div>
-		<!-- Modal delete user -->
-		<div class="modal fade" id="deleteUserModal_${user.userId}"
-			role="dialog">
-			<div class="modal-dialog">
-
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">
-							<spring:message
-								code="user.userDetails.modalTitle.deleteUserBtn" />
-						</h4>
-					</div>
-					<div class="modal-body">
-						<p>
-							<spring:message
-								code="user.userDetails.modalBody.deleteUser" />
-						</p>
-					</div>
-					<div class="modal-footer">
-						<sec:authorize access="hasRole('ROLE_ADMIN')">
-							<div class="col-lg-2 col-lg-offset-8">
-								<c:url var="deleteUser" value="/users/user?id=${user.userId}" />
-								<form action="${deleteUser}" method="POST">
-									<input type="submit" class="btn btn-danger"
-										value="<spring:message code="user.userDetails.modalFooter.deleteUserBtn"/>" />
-									<input type="hidden" name="${_csrf.parameterName}"
-										value="${_csrf.token}" />
-								</form>
-							</div>
-						</sec:authorize>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							<spring:message
-								code="user.userDetails.modalFooter.cancelDeleteUserBtn" />
-						</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-		<!-- end of modal delete user -->
-
 	</section>
 </body>
 </html>

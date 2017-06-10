@@ -20,14 +20,18 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer userId;
-	@Column(name = "username")
-	private String userName;
+	@Column(name = "username", unique = true)
+	private String userName; 
 	private String password;
 	private String email;
 	private boolean enabled;
 	@ManyToMany
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<UserRole> userRoles;
+	
+	@ManyToMany
+	@JoinTable(name= "user_books", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+	private List<Book> favouriteUserBooks;
 
 	public Integer getUserId() {
 		return userId;
@@ -75,6 +79,14 @@ public class User {
 
 	public void setUserRoles(List<UserRole> userRoles) {
 		this.userRoles = userRoles;
+	}
+
+	public List<Book> getFavouriteUsersBooks() {
+		return favouriteUserBooks;
+	}
+
+	public void setFavouriteUsersBooks(List<Book> favouriteUsersBooks) {
+		this.favouriteUserBooks = favouriteUsersBooks;
 	}
 
 }

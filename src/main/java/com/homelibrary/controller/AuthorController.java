@@ -43,7 +43,7 @@ public class AuthorController {
 
 	@RequestMapping(value = "/delete/author", method = RequestMethod.POST)
 	public String deleteAuthor(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
-		authorService.removeAuthorById(id);
+		authorService.removeAuthor(authorService.getAuthorById(id));
 		redirectAttributes.addFlashAttribute("deleteSuccess", true);
 		return "redirect:/authors";
 	}
@@ -63,11 +63,14 @@ public class AuthorController {
 		if (result.hasErrors()) {
 			return "addAuthor";
 		}
-		author.setAuthorName(authorDto.getAuthorName());
-		author.setAuthorSurname(authorDto.getAuthorSurname());
-		authorService.insertAuthor(author);
-		redirectAttributes.addFlashAttribute("insertSuccess", true);
-
+		if (authorService.findAuthorByName(authorDto.getAuthorName(), authorDto.getAuthorSurname()) != null) {
+			redirectAttributes.addFlashAttribute("authorExistAlert", true);
+		} else {
+			author.setAuthorName(authorDto.getAuthorName());
+			author.setAuthorSurname(authorDto.getAuthorSurname());
+			authorService.insertAuthor(author);
+			redirectAttributes.addFlashAttribute("insertSuccess", true);
+		}
 		return "redirect:/authors";
 	}
 

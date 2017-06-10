@@ -33,20 +33,69 @@
 				</c:if>
 			</div>
 		</div>
-		<div class="col-lg-4">
+		<div class="col-lg-2">
 			<table class="table">
 				<c:forEach items="${users}" var="user">
 					<tbody>
 						<tr>
-							<th>${user.userName}</th>
-							<td><a
-								href=" <spring:url value="/users/user?id=${user.userId}"/>"
-								class="btn btn-primary"> <span
-									class="glyphicon-info-sign glyphicon"></span> <spring:message
-										code="admin.users.userDetails" />
-							</a></td>
+							<th><a
+								href=" <spring:url value="/users/user?id=${user.userId}"/>">
+									<c:out value="${user.userName}" />
+							</a></th>
+							<th><sec:authorize access="hasRole('ROLE_ADMIN')">
+									<div class="col-lg-2 ">
+										<button type="button" class="btn btn-danger"
+											data-toggle="modal"
+											data-target="#deleteUserModal_${user.userId}">
+											<spring:message code="user.userDetails.deleteUserBtn" />
+										</button>
+									</div>
+								</sec:authorize></th>
 						</tr>
 					</tbody>
+<!-- Modal delete user -->
+		<div class="modal fade" id="deleteUserModal_${user.userId}"
+			role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<spring:message
+								code="user.userDetails.modalTitle.deleteUserBtn" />
+						</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							<spring:message
+								code="user.userDetails.modalBody.deleteUser" />
+						</p>
+					</div>
+					<div class="modal-footer">
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<div class="col-lg-2 col-lg-offset-8">
+								<c:url var="deleteUser" value="/users/user?id=${user.userId}" />
+								<form action="${deleteUser}" method="POST">
+									<input type="submit" class="btn btn-danger"
+										value="<spring:message code="user.userDetails.modalFooter.deleteUserBtn"/>" />
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" />
+								</form>
+							</div>
+						</sec:authorize>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<spring:message
+								code="user.userDetails.modalFooter.cancelDeleteUserBtn" />
+						</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- end of modal delete user -->
+
 				</c:forEach>
 			</table>
 		</div>

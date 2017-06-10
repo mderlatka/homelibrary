@@ -20,7 +20,6 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
 	@Transactional
 	public void insertCategory(Category category) {
-		category.setCategoryName(category.getCategoryName());
 		category = entityManager.merge(category);
 	}
 
@@ -29,7 +28,6 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 		Query query = entityManager.createQuery("Select c FROM Category c", Category.class);
 		@SuppressWarnings("unchecked")
 		List<Category> listOfCategories = query.getResultList();
-
 		return listOfCategories;
 	}
 
@@ -40,8 +38,21 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	}
 
 	@Transactional
-	public void removeAuthorById(Integer categoryId) {
-		Category category = entityManager.find(Category.class, categoryId);
-		entityManager.remove(category);
+	public void removeCategory(Category category) {
+		entityManager.remove(entityManager.merge(category));
+	}
+	
+	@Transactional
+	public Category findCategoryByName(String categoryName){
+		
+		Query query = entityManager.createQuery("SELECT c FROM Category c WHERE c.categoryName =:categoryName", Category.class)
+				.setParameter("categoryName", categoryName);
+		@SuppressWarnings("unchecked")
+		List<Category> category = query.getResultList();
+		if(category.isEmpty()){
+			return null;
+		}else{
+		return category.get(0);
+	}
 	}
 }

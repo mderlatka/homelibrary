@@ -44,7 +44,7 @@
 						alt="200x300" style="width: 200px; height: 300px;" />
 					<div class="caption">
 						<h3>${book.title}</h3>
-						<h4>${book.author.authorName}${book.author.authorSurname}</h4>
+						<h4>${book.author.authorName} ${book.author.authorSurname}</h4>
 						<p>
 							<spring:message code="book.books.genre" />
 							${book.category.categoryName}

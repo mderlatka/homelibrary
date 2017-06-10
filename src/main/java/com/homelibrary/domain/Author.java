@@ -2,6 +2,7 @@ package com.homelibrary.domain;
 
 import java.util.List;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ public class Author {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "author_id")
 	private Integer authorId;
 	@Column(name = "author_name")
 	private String authorName;

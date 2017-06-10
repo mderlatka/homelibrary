@@ -33,12 +33,13 @@ public class AdminController {
 		user.setUserRoles(userService.findUserRoles(id));
 		model.addAttribute("userRoles", user.getUserRoles());
 		model.addAttribute("user", userService.getUserById(id));
+		model.addAttribute("userBooks", userService.getFavoriteUserBooks(id));
 		return "userDetails";
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public String deleteUser(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
-		userService.removeUserById(id);
+		userService.removeUser(userService.getUserById(id));
 		redirectAttributes.addFlashAttribute("deleteUsrSuccess", true);
 		return "redirect:/users";
 	}

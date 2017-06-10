@@ -12,5 +12,7 @@ public interface AuthorService {
 
 	Author getAuthorById(Integer authorId);
 
-	void removeAuthorById(Integer authorId);
+	void removeAuthor(Author author);
+	
+	Author findAuthorByName(String authorName, String authorSurname);
 }
