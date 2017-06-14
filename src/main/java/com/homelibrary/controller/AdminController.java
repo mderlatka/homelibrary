@@ -1,5 +1,7 @@
 package com.homelibrary.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,12 @@ public class AdminController {
 
 	@RequestMapping
 	public String getAllUsers(Model model) {
-		model.addAttribute("users", userService.findAll());
+		List<User> users= userService.findAll();
+		for(User user : users){
+			Integer userId = user.getUserId();
+			user.setUserRoles(userService.findUserRoles(userId));
+		}
+		model.addAttribute("users", users);
 		return "users";
 	}
 

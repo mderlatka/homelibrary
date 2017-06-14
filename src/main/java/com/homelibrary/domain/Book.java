@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -36,8 +37,9 @@ public class Book {
 	@Column(name = "no_pages")
 	private Integer numOfPages;
 	private String description;
-	@Transient
-	private MultipartFile bookImage;
+	@Lob
+	@Column(name="book_image")
+	private byte[] bookImage;
 	@ManyToMany(mappedBy= "favouriteUserBooks")
 	private List<User> user;
 
@@ -100,11 +102,11 @@ public class Book {
 		this.bookId = id;
 	}
 
-	public MultipartFile getBookImage() {
+	public byte[] getBookImage() {
 		return bookImage;
 	}
 
-	public void setBookImage(MultipartFile bookImage) {
+	public void setBookImage(byte[] bookImage) {
 		this.bookImage = bookImage;
 	}
 

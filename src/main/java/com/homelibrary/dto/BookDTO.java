@@ -29,6 +29,7 @@ public class BookDTO {
 	private Integer numOfPages;
 	@Size(min = 10, max = 2000, message = "{bookDto.description.validation}")
 	private String description;
+	
 	private MultipartFile bookImage;
 
 	public String getTitle() {

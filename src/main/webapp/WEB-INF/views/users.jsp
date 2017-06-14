@@ -35,14 +35,26 @@
 		</div>
 		<div class="col-lg-2">
 			<table class="table">
+				<thead>
+				<tr>
+				<th><strong>#ID</strong></th>
+				<th><strong>Login</strong></th>
+				<th><strong>Email</strong></th>
+				<th><strong>Roles</strong></th>
+				</tr>
+				</thead>
 				<c:forEach items="${users}" var="user">
 					<tbody>
 						<tr>
-							<th><a
+						<td>${user.userId}</td>
+							<td><a
 								href=" <spring:url value="/users/user?id=${user.userId}"/>">
 									<c:out value="${user.userName}" />
-							</a></th>
-							<th><sec:authorize access="hasRole('ROLE_ADMIN')">
+							</a></td>
+							<td>${user.email}</td>
+							<td><c:forEach items="${user.userRoles}" var="roles">${roles.rolename}<br/></c:forEach></td>
+							<td><div class="col-lg-2"><a href="<spring:url value="/users/user?id=${user.userId}"/>" class="btn btn-info"><spring:message code="admin.users.movetoUserDetailsBtn"/></a></div></td>
+							<td><sec:authorize access="hasRole('ROLE_ADMIN')">
 									<div class="col-lg-2 ">
 										<button type="button" class="btn btn-danger"
 											data-toggle="modal"
@@ -50,7 +62,7 @@
 											<spring:message code="user.userDetails.deleteUserBtn" />
 										</button>
 									</div>
-								</sec:authorize></th>
+								</sec:authorize></td>
 						</tr>
 					</tbody>
 <!-- Modal delete user -->

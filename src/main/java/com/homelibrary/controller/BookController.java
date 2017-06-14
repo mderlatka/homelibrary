@@ -1,6 +1,5 @@
 package com.homelibrary.controller;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.text.ParseException;
@@ -114,11 +113,10 @@ public class BookController {
 		}
 
 		MultipartFile bookImage = bookDto.getBookImage();
-		String title = bookDto.getTitle().toString();
-		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
 		if (bookImage != null && !bookImage.isEmpty()) {
 			try {
-				bookImage.transferTo(new File(rootDirectory+"resources\\images\\" + title + ".png"));
+				bookImage.getOriginalFilename();
+				book.setBookImage(bookImage.getBytes());
 			} catch (Exception e) {
 				throw new RuntimeException("Niepowodzenie podczas próby zapisu obrazka produktu", e);
 			}
@@ -135,7 +133,6 @@ public class BookController {
 		book.setCategory(bookDto.getCategory());
 		book.setNumOfPages(bookDto.getNumOfPages());
 		book.setDescription(bookDto.getDescription());
-		book.setBookImage(bookDto.getBookImage());
 		book.setAuthor(bookDto.getAuthor());
 		bookService.insertBook(book);
 		redirectAttributes.addFlashAttribute("addSuccess", true);

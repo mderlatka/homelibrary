@@ -26,9 +26,11 @@
 	<section>
 		<div class="row">
 			<div class="col-lg-5">
+			<a href="<c:url value="/image/book?id=${book.bookId}"/>">
 				<img
-					src="<c:url value="/resources/images/${book.title}.png"></c:url>"
+					src="/homelibrary/image/book?id=${book.bookId}"
 					alt="image" style="width: 300px" />
+					</a>
 			</div>
 			<div class="col-lg-6">
 				<h3>${book.author.authorName}&nbsp;${book.author.authorSurname}</h3>
