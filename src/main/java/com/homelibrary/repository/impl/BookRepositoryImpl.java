@@ -27,6 +27,12 @@ public class BookRepositoryImpl implements BookRepository {
 	}
 
 	@Transactional
+	public void updateBook(Book book) {
+
+		book = entityManager.merge(book);
+	}
+
+	@Transactional
 	public List<Book> getAllBooks() {
 
 		Query query = entityManager.createQuery("SELECT b FROM Book b", Book.class);
@@ -69,7 +75,6 @@ public class BookRepositoryImpl implements BookRepository {
 		if (book != null) {
 			entityManager.remove(entityManager.merge(book));
 		}
-
 	}
 
 }

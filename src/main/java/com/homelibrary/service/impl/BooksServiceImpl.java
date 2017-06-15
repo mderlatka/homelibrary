@@ -31,6 +31,11 @@ public class BooksServiceImpl implements BookService {
 	public void insertBook(Book book) {
 		bookRepository.insertBook(book);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void updateBook(Book book) {
+		bookRepository.updateBook(book);
+	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void removeBook(Book book) {

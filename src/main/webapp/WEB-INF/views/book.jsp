@@ -25,12 +25,18 @@
 	</section>
 	<section>
 		<div class="row">
+			<c:if test="${addSuccess eq true}">
+				<div class="alert alert-success">
+					<spring:message code="book.books.updateSucces" />
+				</div>
+			</c:if>
+		</div>
+		<div class="row">
 			<div class="col-lg-5">
-			<a href="<c:url value="/image/book?id=${book.bookId}"/>">
-				<img
-					src="/homelibrary/image/book?id=${book.bookId}"
-					alt="image" style="width: 300px" />
-					</a>
+				<a href="<c:url value="/image/book?id=${book.bookId}"/>"> <img
+					src="/homelibrary/image/book?id=${book.bookId}" alt="image"
+					style="width: 300px" />
+				</a>
 			</div>
 			<div class="col-lg-6">
 				<h3>${book.author.authorName}&nbsp;${book.author.authorSurname}</h3>
@@ -61,6 +67,13 @@
 								code="book.book.return" />
 						</a>
 					</div>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<div class="col-lg-2 col-lg-offset-1">
+							<a
+								href="<spring:url value="/books/update/book?id=${book.bookId}" />"
+								class="btn btn-primary"> Edytuj </a>
+						</div>
+					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<div class="col-lg-2 col-lg-offset-1">
 							<button type="button" class="btn btn-danger" data-toggle="modal"
@@ -105,18 +118,18 @@
 				</p>
 			</div>
 			<div class="modal-footer">
-					<div class="col-lg-1 col-lg-offset-8">
-						<c:url var="deleteBook" value="/books/book?id=${book.bookId}" />
-						<form action="${deleteBook}" method="POST">
-							<input type="submit" class="btn btn-danger"
-								value="<spring:message code="book.book.modalFooter.DeleteBookBtn"/>" />
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" />
-						</form>
-					</div>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							<spring:message code="book.book.modalFooter.cancelDeleteBookBtn" />
-						</button>
+				<div class="col-lg-1 col-lg-offset-8">
+					<c:url var="deleteBook" value="/books/book?id=${book.bookId}" />
+					<form action="${deleteBook}" method="POST">
+						<input type="submit" class="btn btn-danger"
+							value="<spring:message code="book.book.modalFooter.DeleteBookBtn"/>" />
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+					</form>
+				</div>
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					<spring:message code="book.book.modalFooter.cancelDeleteBookBtn" />
+				</button>
 			</div>
 		</div>
 

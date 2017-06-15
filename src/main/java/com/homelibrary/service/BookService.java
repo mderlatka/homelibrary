@@ -13,6 +13,8 @@ public interface BookService {
 	Book getBookById(Integer bookId);
 
 	void insertBook(Book book);
+	
+	void updateBook(Book book);
 
 	void removeBook(Book book);
 

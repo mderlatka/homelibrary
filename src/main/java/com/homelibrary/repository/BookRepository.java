@@ -15,6 +15,8 @@ public interface BookRepository {
 	Book getBookById(Integer bookId);
 
 	void removeBook(Book book);
+	
+	void updateBook(Book book);
 
 	List<Book> getBookByAuthor(Author author);
 

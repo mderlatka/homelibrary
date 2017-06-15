@@ -3,12 +3,12 @@ package com.homelibrary.dto;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.homelibrary.annotation.DateFormat;
 import com.homelibrary.domain.Author;
 import com.homelibrary.domain.Category;
 
@@ -19,7 +19,7 @@ public class BookDTO {
 	@NotNull(message = "{bookDto.author.validation}")
 	private Author author;
 	@NotEmpty(message = "{bookDto.releaseDate.validation1}")
-	@Pattern(regexp = "[0-3][0-9]\\.[0-1][0-9]\\.[1-2][0-9]{3}", message = "{bookDto.releaseDate.validation2}")
+	@DateFormat(pattern="dd.MM.yyyy", message="{bookDto.releaseDate.DateFormat.validation}")
 	private String releaseDate;
 	@NotNull(message = "{bookDto.category.validation}")
 	private Category category;

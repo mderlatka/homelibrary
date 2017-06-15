@@ -16,6 +16,8 @@
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/*/add"
 			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/*/update"
+			access="hasRole('ROLE_ADMIN')" />	
 		<security:intercept-url pattern="/*/addAuthor"
 			access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/*/addCategory"
