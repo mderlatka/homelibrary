@@ -52,7 +52,7 @@
 			<div class="col-lg-4" style="padding-bottom: 15px">
 				<div class="thumbnail" style="height: 525px;">
 					<img src="/homelibrary/image/book?id=${book.bookId}" alt="200x300"
-						style="width: 200px; height: 300px;" />
+						style="width: 200px; height: 300px;"/>
 					<div class="caption">
 						<h3>${book.title}</h3>
 						<h4>${book.author.authorName}&nbsp;${book.author.authorSurname}</h4>

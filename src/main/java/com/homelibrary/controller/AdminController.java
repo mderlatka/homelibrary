@@ -44,7 +44,7 @@ public class AdminController {
 		return "userDetails";
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete/user", method = RequestMethod.POST)
 	public String deleteUser(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
 		userService.removeUser(userService.getUserById(id));
 		redirectAttributes.addFlashAttribute("deleteUsrSuccess", true);

@@ -13,16 +13,18 @@ import com.homelibrary.domain.User;
 import com.homelibrary.domain.UserRole;
 import com.homelibrary.repository.UserRepository;
 import com.homelibrary.repository.UserRoleRepository;
+import com.homelibrary.service.EmailService;
 import com.homelibrary.service.UserService;
 
 @Service
-
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
 	UserRoleRepository userRoleRepository;
+	@Autowired
+	EmailService emailService;
 
 	public void insertUser(User user) {
 		user.setEnabled(true);
@@ -31,6 +33,9 @@ public class UserServiceImpl implements UserService {
 		List<UserRole> roles = new ArrayList<>();
 		roles.add(userRoleRepository.findRoleByName("ROLE_USER"));
 		user.setUserRoles(roles);
+		String emailSubject = "Rejestracja nowego u¿ytkownika";
+		String emailContent = "Witaj "+user.getUserName()+" !"+"\n\nUprzejmie informujê, ¿e poprawnie zarejestrowa³eœ/aœ siê w aplikacji Homelibrary. Twoje dane:\nLogin: "+user.getUserName()+"\nEmail: "+user.getEmail();
+		emailService.sendEmail(user.getEmail(), emailSubject, emailContent);
 		userRepository.insertUser(user);
 	}
 
@@ -69,6 +74,9 @@ public class UserServiceImpl implements UserService {
 		userBooks.add(book);
 		user.setFavouriteUsersBooks(userBooks);
 		userRepository.saveFavoriteUserBook(user);
+		String emailSubject = "Nowa ksi¹¿ka dodana do ulubionych";
+		String emailContent = "Witaj "+user.getUserName()+" !"+"\n\nUprzejmie informujê, ¿e w³aœnie doda³eœ/aœ do ulubionych now¹ ksi¹¿kê - '"+book.getTitle()+"'\n\nSzczegó³y ksi¹¿ki mo¿esz sprawdziæ pod adresem: http://localhost:14574/homelibrary/books/book?id="+book.getBookId();
+		emailService.sendEmail(user.getEmail(), emailSubject, emailContent); 
 	}
 	
 	@PreAuthorize("#user.userName == authentication.name or hasRole('ROLE_ADMIN')")

@@ -164,17 +164,14 @@
 					</div>
 					<div class="modal-footer">
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-							<div class="col-lg-2 col-lg-offset-8">
-								<c:url var="deleteUser" value="/users/user?id=${user.userId}" />
-								<form action="${deleteUser}" method="POST">
-									<input type="submit" class="btn btn-danger"
+								<form action="<c:url value="/users/delete/user?id=${user.userId}" />" method="POST">
+									<input type="submit" class="col-lg-2 btn btn-danger"
 										value="<spring:message code="user.userDetails.modalFooter.deleteUserBtn"/>" />
 									<input type="hidden" name="${_csrf.parameterName}"
 										value="${_csrf.token}" />
 								</form>
-							</div>
 						</sec:authorize>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
+						<button type="button" class="col-lg-2 btn btn-default" data-dismiss="modal">
 							<spring:message
 								code="user.userDetails.modalFooter.cancelDeleteUserBtn" />
 						</button>

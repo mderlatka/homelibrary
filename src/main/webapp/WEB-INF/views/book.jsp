@@ -13,6 +13,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+</style>
 <title>${book.title}</title>
 </head>
 <body>
@@ -61,38 +63,40 @@
 					<br></br> ${book.description}
 				</p>
 				<div class="row">
-					<div class="col-lg-2">
-						<a href="<c:url value="/books" />" class="btn btn-primary"> <span
-							class="glyphicon-hand-left glyphicon"></span> <spring:message
-								code="book.book.return" />
-						</a>
-					</div>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<div class="col-lg-2 col-lg-offset-1">
-							<a
-								href="<spring:url value="/books/update/book?id=${book.bookId}" />"
-								class="btn btn-primary"> Edytuj </a>
-						</div>
-					</sec:authorize>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<div class="col-lg-2 col-lg-offset-1">
-							<button type="button" class="btn btn-danger" data-toggle="modal"
-								data-target="#deleteModal_${book.bookId}">
-								<spring:message code="book.book.deleteBook" />
-							</button>
-						</div>
-					</sec:authorize>
+					<a href="<spring:url value="/books" />"><button
+							class="col-lg-4 btn btn-secondary" type="button">
+							<spring:message code="book.book.return" />
+						</button></a>
+				</div>
+				<br />
+				<div class="row">
 					<sec:authorize access="isAuthenticated()">
-						<div class="col-lg-2 col-lg-offset-1">
-							<c:url var="doAddFavoriteUserBook"
-								value="/favorite/book?id=${book.bookId}" />
-							<form action="${doAddFavoriteUserBook}" method="POST">
-								<input type="submit" class="btn btn-primary"
-									value="<spring:message code="book.book.addToFavorite"/>" /> <input
-									type="hidden" name="${_csrf.parameterName}"
-									value="${_csrf.token}" />
-							</form>
-						</div>
+						<form action="<c:url value="/favorite/book?id=${book.bookId}" />"
+							method="POST">
+							<input type="submit" class="col-lg-4 btn btn-secondary"
+								value="<spring:message code="book.book.addToFavorite"/>" /> <input
+								type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
+						</form>
+					</sec:authorize>
+				</div>
+				<br />
+				<div class="row">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<a
+							href="<spring:url value="/books/update/book?id=${book.bookId}" />">
+							<button class="col-lg-4 btn btn-secondary" type="button">
+								<spring:message code="book.book.editBookBtn" /></button>
+						</a>
+					</sec:authorize>
+				</div>
+				<br />
+				<div class="row">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<button type="button" class="col-lg-4 btn btn-secondary"
+							data-toggle="modal" data-target="#deleteModal_${book.bookId}">
+							<spring:message code="book.book.deleteBook" />
+						</button>
 					</sec:authorize>
 				</div>
 			</div>
