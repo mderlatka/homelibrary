@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.homelibrary.annotation.BookImageSize;
 import com.homelibrary.annotation.DateFormat;
 import com.homelibrary.domain.Author;
 import com.homelibrary.domain.Category;
@@ -19,7 +20,7 @@ public class BookDTO {
 	@NotNull(message = "{bookDto.author.validation}")
 	private Author author;
 	@NotEmpty(message = "{bookDto.releaseDate.validation1}")
-	@DateFormat(pattern="dd.MM.yyyy", message="{bookDto.releaseDate.DateFormat.validation}")
+	@DateFormat(message = "{bookDto.releaseDate.DateFormat.validation}")
 	private String releaseDate;
 	@NotNull(message = "{bookDto.category.validation}")
 	private Category category;
@@ -29,7 +30,7 @@ public class BookDTO {
 	private Integer numOfPages;
 	@Size(min = 10, max = 2000, message = "{bookDto.description.validation}")
 	private String description;
-	
+	@BookImageSize(message = "{bookDto.bookImageSize.validation}")
 	private MultipartFile bookImage;
 
 	public String getTitle() {

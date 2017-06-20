@@ -124,6 +124,7 @@ public class BookController {
 		}
 
 		MultipartFile bookImage = bookDto.getBookImage();
+
 		if (bookImage != null && !bookImage.isEmpty()) {
 			try {
 				book.setBookImage(bookImage.getBytes());
@@ -182,6 +183,7 @@ public class BookController {
 		}
 
 		MultipartFile bookImage = bookDto.getBookImage();
+
 		if (bookImage != null && !bookImage.isEmpty()) {
 			try {
 				book.setBookImage(bookImage.getBytes());

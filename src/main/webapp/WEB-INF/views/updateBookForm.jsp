@@ -123,6 +123,7 @@
 									<div class="col-lg-7">
 										<form:input id="bookImage" path="bookImage" type="file"
 											class="form-control" />
+										<form:errors path="bookImage" cssClass="text-danger" />
 									</div>
 								</div>
 							</div>

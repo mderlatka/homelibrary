@@ -11,13 +11,12 @@ import javax.validation.Payload;
 
 @Target({ FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = { DateFormatValidator.class })
-public @interface DateFormat {
+@Constraint(validatedBy = { BookImageSizeValidator.class })
+public @interface BookImageSize {
 
 	String message();
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-
 }
