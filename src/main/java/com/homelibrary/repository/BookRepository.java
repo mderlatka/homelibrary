@@ -18,7 +18,9 @@ public interface BookRepository {
 	
 	void updateBook(Book book);
 
-	List<Book> getBookByAuthor(Author author);
+	List<Book> getBooksByAuthor(Author author);
 
 	List<Book> getBooksByCategory(Category category);
+	
+	Book getBookByTitle(String title);
 }

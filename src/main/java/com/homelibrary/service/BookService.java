@@ -18,9 +18,11 @@ public interface BookService {
 
 	void removeBook(Book book);
 
-	List<Book> getBookByAuthor(Author author);
+	List<Book> getBooksByAuthor(Author author);
 
 	List<Book> getBooksByCategory(Category category);
 
 	List<Book> getLatestBooks();
+	
+	Book getBookByTitle(String title);
 }

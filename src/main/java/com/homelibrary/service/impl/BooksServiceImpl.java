@@ -42,8 +42,8 @@ public class BooksServiceImpl implements BookService {
 		bookRepository.removeBook(book);
 	}
 
-	public List<Book> getBookByAuthor(Author author) {
-		return bookRepository.getBookByAuthor(author);
+	public List<Book> getBooksByAuthor(Author author) {
+		return bookRepository.getBooksByAuthor(author);
 	}
 
 	public List<Book> getBooksByCategory(Category category) {
@@ -64,6 +64,11 @@ public class BooksServiceImpl implements BookService {
 			}
 		}
 		return latestBooks;
+	}
+
+	
+	public Book getBookByTitle(String title) {
+		return bookRepository.getBookByTitle(title);
 	}
 
 }

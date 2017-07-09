@@ -1,5 +1,7 @@
 package com.homelibrary.repository.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -28,6 +30,13 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	public UserRole findRoleById(Integer roleId) {
 		UserRole userRole = entityManager.find(UserRole.class, roleId);
 		return userRole;
+	}
+	@Transactional
+	public List<UserRole> findAllRoles(){
+		Query query = entityManager.createQuery("SELECT u FROM UserRole u", UserRole.class);
+		@SuppressWarnings("unchecked")
+		List<UserRole> userRoles = query.getResultList();
+		return userRoles;
 	}
 
 }

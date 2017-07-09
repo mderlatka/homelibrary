@@ -12,8 +12,8 @@ import com.homelibrary.domain.Book;
 import com.homelibrary.domain.User;
 import com.homelibrary.domain.UserRole;
 import com.homelibrary.repository.UserRepository;
-import com.homelibrary.repository.UserRoleRepository;
 import com.homelibrary.service.EmailService;
+import com.homelibrary.service.UserRoleService;
 import com.homelibrary.service.UserService;
 
 @Service
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
-	UserRoleRepository userRoleRepository;
+	UserRoleService userRoleService;
 	@Autowired
 	EmailService emailService;
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		user.setPassword(encoder.encode(user.getPassword()));
 		List<UserRole> roles = new ArrayList<>();
-		roles.add(userRoleRepository.findRoleByName("ROLE_USER"));
+		roles.add(userRoleService.findRoleByName("ROLE_USER"));
 		user.setUserRoles(roles);
 		String emailSubject = "Rejestracja nowego u¿ytkownika";
 		String emailContent = "Witaj "+user.getUserName()+" !"+"\n\nUprzejmie informujê, ¿e poprawnie zarejestrowa³eœ/aœ siê w aplikacji Homelibrary. Twoje dane:\nLogin: "+user.getUserName()+"\nEmail: "+user.getEmail();
@@ -45,8 +45,6 @@ public class UserServiceImpl implements UserService {
 
 	public User getUserById(Integer userId) {
 		User user = userRepository.getUserById(userId);
-		List<UserRole> roles = user.getUserRoles();
-		user.setUserRoles(roles);
 		return user;
 	}
 

@@ -73,7 +73,7 @@ public class BookController {
 	public String getAllBooksOfAuthor(@RequestParam("id") Integer authorId, Model model) {
 		Author author = new Author();
 		author = authorService.getAuthorById(authorId);
-		List<Book> authorBooks = bookService.getBookByAuthor(author);
+		List<Book> authorBooks = bookService.getBooksByAuthor(author);
 		if (authorBooks.isEmpty()) {
 			model.addAttribute("emptyListOfAuthorBooks", true);
 		}

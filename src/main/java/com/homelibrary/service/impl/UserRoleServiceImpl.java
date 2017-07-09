@@ -1,5 +1,7 @@
 package com.homelibrary.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +18,17 @@ public class UserRoleServiceImpl implements UserRoleService {
 	UserRoleRepository userRoleRepository;
 
 	@Override
-	public UserRole findRoleIdByName(String rolename) {
+	public UserRole findRoleByName(String rolename) {
 		return userRoleRepository.findRoleByName(rolename);
 	}
 
 	@Override
 	public UserRole findRoleById(Integer roleId) {
 		return userRoleRepository.findRoleById(roleId);
+	}
+	
+	@Override
+	public List<UserRole> findAllRoles(){
+		return userRoleRepository.findAllRoles();
 	}
 }

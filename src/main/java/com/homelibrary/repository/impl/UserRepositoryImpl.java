@@ -45,8 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
 	@Transactional
 	public List<UserRole> findRolesByUserId(Integer userId) {
 		Query query = entityManager
-				.createQuery("SELECT ur FROM User u JOIN u.userRoles ur WHERE u.userId = ?", UserRole.class)
-				.setParameter(1, userId);
+				.createQuery("SELECT ur FROM User u JOIN u.userRoles ur WHERE u.userId = :userId", UserRole.class).setParameter("userId", userId);
 		@SuppressWarnings("unchecked")
 		List<UserRole> roles = query.getResultList();
 		return roles;
@@ -75,7 +74,7 @@ public class UserRepositoryImpl implements UserRepository {
 	
 	@Transactional
 	public List<Book> getFavoriteUserBooks(Integer userId){
-		Query query = entityManager.createQuery("SELECT ub FROM User u JOIN u.favouriteUserBooks ub WHERE u.userId = ?", Book.class).setParameter(1, userId);
+		Query query = entityManager.createQuery("SELECT ub FROM User u JOIN u.favouriteUserBooks ub WHERE u.userId = :userId", Book.class).setParameter("userId", userId);
 		@SuppressWarnings("unchecked")
 		List<Book>	favouriteUserBooks = query.getResultList();
 		return favouriteUserBooks;

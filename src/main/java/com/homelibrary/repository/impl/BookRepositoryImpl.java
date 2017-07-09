@@ -44,7 +44,7 @@ public class BookRepositoryImpl implements BookRepository {
 	}
 
 	@Transactional
-	public List<Book> getBookByAuthor(Author author) {
+	public List<Book> getBooksByAuthor(Author author) {
 		Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.author=?1", Book.class).setParameter(1,
 				author);
 		@SuppressWarnings("unchecked")
@@ -74,6 +74,18 @@ public class BookRepositoryImpl implements BookRepository {
 	public void removeBook(Book book) {
 		if (book != null) {
 			entityManager.remove(entityManager.merge(book));
+		}
+	}
+
+	@Transactional
+	public Book getBookByTitle(String title) {
+		Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.title = :title", Book.class).setParameter("title", title);
+		@SuppressWarnings("unchecked")
+		List<Book> books = query.getResultList();
+		if(!books.isEmpty()) {
+			return books.get(0);
+		}else{
+			return null;
 		}
 	}
 
